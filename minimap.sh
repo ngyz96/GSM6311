@@ -3,7 +3,7 @@
 for FILE in `ls -1 *_trimmed.fastq.gz | sed 's/_trimmed.fastq.gz//'`
 do
     echo "minimap2 for ${FILE}"
-    minimap2 -ax map-ont -t 60 ../databases/ncbi16s18srRNA.bacteria_archaea_fungi.mmi ${FILE}_trimmed.fastq.gz > ${FILE}.sam
+    minimap2 -ax map-ont -t 24 ../databases/ncbi16s18srRNA.bacteria_archaea_fungi.mmi ${FILE}_trimmed.fastq.gz > ${FILE}.sam
     echo "doing samtools"
     samtools view -o ${FILE}.bam ${FILE}.sam
     samtools sort -o ${FILE}.sorted.bam ${FILE}.bam
