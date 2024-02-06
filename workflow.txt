@@ -1,7 +1,18 @@
 #preprocessing
-basedcalled with ?guppy on MINIKNOW
+## basedcalled with dorado on MINIKNOW
+## combine fastq
+for FILE in `ls -1 `;
+do
+	cd ${FILE};
+	cat *.fastq.gz > ../../combined/${FILE}.fastq.gz;
+	cd -;
+done
 ## porechop -> adaptor removal
-porechop -i barcode07_combined.fastq.gz -b ../results/porechop/barcode7/ 2> output.txt
+for FILE in `ls -1  | sed 's/.fastq.gz//'`;
+do
+	porechop -i ${FILE}.fastq.gz -b ../results/porechop/${FILE} 2>output.txt
+
+done
 ## seqkit -> trimming (1350-1900 bp taken from https://bmcmicrobiol.biomedcentral.com/articles/10.1186/s12866-021-02094-5)
 seqkit seq BC07.fastq.gz -M 1900 -m 1350 -j 20 -o BC07_trimmed.fastq.gz
 
@@ -54,6 +65,12 @@ generate_kmer_distribution.py \
     -o database1000mers.kmer_distrib
 
 # kraken alignment
+for FILE in `ls -1  | sed 's/.fastq.gz//'`;
+do
+	kraken2 --db ../../minion/databases/kraken2_database/ --threads 12 --report ../kraken2/${FILE}.kreport \
+	--output ../kraken2/${FILE}.kraken ${FILE}.fastq.gz
+
+done
 kraken2 --db ../../databases/kraken2_database/ --threads 8 --report ../kraken2/BC07.kreport --output ../kraken2/BC07.kraken BC07_trimmed.fastq.gz
 bracken -d ../../databases/kraken2_database/ -i BC07.kreport -o BC07.bracken -w BC07.breport -r 1000
 
