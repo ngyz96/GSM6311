@@ -1,9 +1,9 @@
 #!/bin/bash
 
-for FILE in `ls -1 *_trimmed.fastq.gz | sed 's/_filtered.fastq.gz//'`
+for FILE in `ls -1 *_filtered.fastq.gz | sed 's/_filtered.fastq.gz//'`
 do
     echo "minimap2 for ${FILE}"
-    minimap2 -ax map-ont -t 12 ../databases/ncbi16s18srRNA.bacteria_archaea.mmi ${FILE}_trimmed.fastq.gz > ${FILE}.sam
+    minimap2 -ax map-ont -t 12 ../database/ncbi16s18srRNA.bacteria_archaea.mmi ${FILE}_filtered.fastq.gz > ${FILE}.sam
     echo "doing samtools"
     samtools view -o ${FILE}.bam ${FILE}.sam
     samtools sort -o ${FILE}.sorted.bam ${FILE}.bam
