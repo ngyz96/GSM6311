@@ -4,4 +4,5 @@
 Author: Ng Yong Zhi
 
 ## Overview of pipeline
-![final_workflow](https://github.com/ngyz96/GSM6311/assets/41257178/ce65bca7-385e-498c-b15f-4d513b13ede2)
+
+![workflow](https://github.com/ngyz96/GSM6311/assets/41257178/fba62c67-024d-4578-afaf-4293e00a3383)
